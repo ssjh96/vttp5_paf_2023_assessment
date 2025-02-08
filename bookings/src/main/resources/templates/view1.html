@@ -53,5 +53,38 @@
         <p th:each="err : ${#fields.allErrors()}" th:text="${err}"></p>
     </div> -->
 
+    <!-- Error Messages (Manual Validation) -->
+    <!-- <div th:if="${errorMessage}">
+        <p th:text="${errorMessage}" style="color:red;"></p>
+    </div> -->
+
+    <!-- // Handle the search request
+    @GetMapping("/search")
+    public String searchListings(
+            @RequestParam String country,
+            @RequestParam int numberOfPersons,
+            @RequestParam double priceMin,
+            @RequestParam double priceMax,
+            Model model) {
+
+        // Validate inputs
+        if (country == null || country.trim().isEmpty()) {
+            model.addAttribute("errorMessage", "Country must not be null or empty.");
+            return showLandingPage(model);
+        }
+        if (numberOfPersons < 1 || numberOfPersons > 10) {
+            model.addAttribute("errorMessage", "Number of persons must be between 1 and 10.");
+            return showLandingPage(model);
+        }
+        if (priceMin < 1 || priceMax > 10000 || priceMin > priceMax) {
+            model.addAttribute("errorMessage", "Price range must be between 1 and 10,000, and Min should not exceed Max.");
+            return showLandingPage(model);
+        }
+
+        // Perform the search
+        model.addAttribute("results", listingsService.searchListings(country, numberOfPersons, priceMin, priceMax));
+        return "results"; // Another Thymeleaf template for showing results
+    } -->
+
 </body>
 </html>
