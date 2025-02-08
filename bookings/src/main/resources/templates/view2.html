@@ -6,6 +6,47 @@
     <title>Document</title>
 </head>
 <body>
-    hello
+    <h1>Listings for <span th:text="${country}"></span></h1>
+
+    <a th:href="@{/}">Back</a>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="listing : ${listings}">
+                <td th:text="${listing.name}"></td>
+                <td th:text="${listing.price}"></td>
+                <td>
+                    <img th:src="${listing.image}" width="200" height="200" alt="Image unavailable">
+                </td>
+
+                <td>
+                    <form method="get" th:action="@{/details}">
+                        <input type="hidden" name="listingId" th:value="${listing.id}">
+                        <button type="submit">Details</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+
+    <!-- Display Error if no listings (Manual Validation) -->
+    <div th:if="${errorMsg}">
+        <p th:text="${errorMsg}" style="color:red;"></p>
+    </div>
+
+
+    
+
 </body>
 </html>

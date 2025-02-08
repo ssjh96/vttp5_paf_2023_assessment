@@ -1,7 +1,9 @@
 package vttp2023.batch3.assessment.paf.bookings.bootstrap;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -17,6 +19,7 @@ public class test implements CommandLineRunner
     @Override
     public void run(String... args) throws Exception {
         
+        // Test Task 2
         System.out.println(">>> Testing distinct countries..");
         List<String> countriesList = listingsRepository.findDistinctCountries();
 
@@ -24,6 +27,27 @@ public class test implements CommandLineRunner
         {
             System.out.println(">>>" + c);
         }
+
+        // Test Task 3
+        System.out.println(">>> Testing Filter");
+
+        Optional<Document> filteredResultOpt = listingsRepository.findListingsByCriteria("aUsTraLia", 2, 50, 100);
+
+        if (filteredResultOpt.isEmpty())
+        {
+            System.out.println(">>> Filtered Result is Empty");
+        }
+
+        Document filteredResult = filteredResultOpt.get();
+
+        System.out.println(">>> Filtered result: \n\n" + filteredResult.toJson());
+
+        List<Document> filtered = filteredResult.getList("filtered", Document.class);
+        for (Document listing : filtered)
+        {
+            System.out.println(">>> listing: \n\n" + listing.toJson());
+        }
+        
     }
     
 }

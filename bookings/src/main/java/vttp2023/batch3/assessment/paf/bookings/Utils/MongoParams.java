@@ -8,5 +8,7 @@ public class MongoParams
 
 	// Field Names
 	public static final String F_COUNTRY = "address.country";
+	public static final String F_ACCOMODATES = "accommodates";
+	public static final String F_PRICE = "price";
 
 }

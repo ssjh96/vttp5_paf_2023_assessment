@@ -2,6 +2,7 @@ package vttp2023.batch3.assessment.paf.bookings.controllers;
 
 import java.util.List;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,24 @@ public class ListingsController {
             model.addAttribute("countries", listingsService.getAllCountries());
             return "view1"; // Back to View 1 with error messages
         }
+
+		String country = listingSearch.getCountry();
+		model.addAttribute("country", country);
+
+		// Get filtered results from the service
+		List<Document> filteredListingsDoc = listingsService.getFilteredResults(country, 
+															listingSearch.getNoOfPeople(), 
+															listingSearch.getPriceMin(), 
+															listingSearch.getPriceMax());
+		
+		// If no listings found return an error message
+		if(filteredListingsDoc.isEmpty())
+		{
+			model.addAttribute("errorMsg", "No accomodations found for given criteria.");
+		}
+
+		// Pass filtered results to View 2
+		model.addAttribute("listings", filteredListingsDoc);
 
 		return "view2";
 	}
