@@ -7,26 +7,36 @@
 </head>
 <body>
     <h1>Search Our Accomodations</h1>
-    <form method="get" th:action="@{/search}">
+    <form method="get" th:action="@{/search}" th:object="${listingSearch}">
 
         <!-- Country dropdown box -->
         <label for="country">Country</label>
         <select id="country" name="country" required>
             <option th:each="country : ${countries}" th:value="${country}" th:text="${country}"></option>
         </select>
+        <p class = "text-danger" style="color:red" data-th-if="${#fields.hasErrors('country')}" data-th-errors = "*{country}"></p>
 
         <br>
 
         <!-- Number of persons -->
-        <label for="numberOfPerson">Number of Person</label>
-        <input type="number" id="numberOfPerson" name="numberOfPerson" min="1" max="10" required>
-        
+        <label for="noOfPeople">Number of Person</label>
+        <!-- <input type="number" id="numberOfPerson" name="numberOfPerson" min="1" max="10" required> -->
+        <input type="number" id="noOfPeople" name="noOfPeople">
+        <p class = "text-danger" style="color:red" data-th-if="${#fields.hasErrors('noOfPeople')}" data-th-errors = "*{noOfPeople}"></p>
+
         <br>
 
         <!-- Price Range -->
         <label for="price">Price Range</label>
-        <input type="number" id="priceMin" name="priceMin" min="1" max="10000" step="0.1" placeholder="Min" required>
-        <input type="number" id="priceMax" name="priceMax" min="1" max="10000" step="0.1" placeholder="max" required>
+
+        <!-- <input type="number" id="priceMin" name="priceMin" min="1" max="10000" step="0.1" placeholder="Min" required>
+        <input type="number" id="priceMax" name="priceMax" min="1" max="10000" step="0.1" placeholder="max" required> -->
+
+        <input type="number" id="priceMin" name="priceMin" step="0.1" placeholder="Min" >
+        <p class = "text-danger" style="color:red" data-th-if="${#fields.hasErrors('priceMin')}" data-th-errors = "*{priceMin}"></p>
+
+        <input type="number" id="priceMax" name="priceMax" step="0.1" placeholder="max" >
+        <p class = "text-danger" style="color:red" data-th-if="${#fields.hasErrors('priceMax')}" data-th-errors = "*{priceMax}"></p>
 
         <br>
 
@@ -36,6 +46,12 @@
         <br>
 
     </form>
+ 
+    <!-- class="text-danger" was from bootstrap, style=color:red is built in-->
+    <!-- Error Messages
+    <div th:if="${#fields.hasErrors()}">
+        <p th:each="err : ${#fields.allErrors()}" th:text="${err}"></p>
+    </div> -->
 
 </body>
 </html>
