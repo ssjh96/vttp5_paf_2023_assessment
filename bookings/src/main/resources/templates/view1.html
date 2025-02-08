@@ -7,6 +7,35 @@
 </head>
 <body>
     <h1>Search Our Accomodations</h1>
-    
+    <form method="get" th:action="@{/search}">
+
+        <!-- Country dropdown box -->
+        <label for="country">Country</label>
+        <select id="country" name="country" required>
+            <option th:each="country : ${countries}" th:value="${country}" th:text="${country}"></option>
+        </select>
+
+        <br>
+
+        <!-- Number of persons -->
+        <label for="numberOfPerson">Number of Person</label>
+        <input type="number" id="numberOfPerson" name="numberOfPerson" min="1" max="10" required>
+        
+        <br>
+
+        <!-- Price Range -->
+        <label for="price">Price Range</label>
+        <input type="number" id="priceMin" name="priceMin" min="1" max="10000" step="0.1" placeholder="Min" required>
+        <input type="number" id="priceMax" name="priceMax" min="1" max="10000" step="0.1" placeholder="max" required>
+
+        <br>
+
+        <!-- Submit Button -->
+        <button type="submit">Search</button>
+
+        <br>
+
+    </form>
+
 </body>
 </html>
