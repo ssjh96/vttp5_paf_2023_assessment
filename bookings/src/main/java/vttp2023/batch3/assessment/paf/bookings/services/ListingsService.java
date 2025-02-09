@@ -37,8 +37,14 @@ public class ListingsService
 		return filteredListings;
 	}
 
-
 	//TODO: Task 4
+
+	public Optional<Document> getListingDetailsById (String listingId)
+	{
+		Optional<Document> result = listingsRepo.findDetailsByListingId(listingId);
+
+		return result;
+	}
 	
 
 	//TODO: Task 5

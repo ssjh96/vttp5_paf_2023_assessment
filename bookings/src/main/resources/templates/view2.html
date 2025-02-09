@@ -10,7 +10,7 @@
 
     <a th:href="@{/}">Back</a>
 
-    <table>
+    <table border="3">
 
         <thead>
             <tr>
@@ -30,10 +30,22 @@
                 </td>
 
                 <td>
+                    <!-- When the "Details" button is clicked, the form submits a GET request with the listingId parameter to the /details endpoint. For example: GET /details?listingId=12345abcd -->
                     <form method="get" th:action="@{/details}">
                         <input type="hidden" name="listingId" th:value="${listing.id}">
                         <button type="submit">Details</button>
                     </form>
+                    <!-- @GetMapping("/details")
+                        public String showDetails(@RequestParam("listingId") String listingId, Model model) {
+                            // Use the listingId to fetch the specific document from the database
+                            Document listingDetails = listingsService.getListingById(listingId);
+
+                            // Add the listing details to the model
+                            model.addAttribute("listingDetails", listingDetails);
+
+                            // Return the view for displaying detailed information (View 3)
+                            return "view3";
+                        } -->
                 </td>
             </tr>
         </tbody>
@@ -45,8 +57,19 @@
         <p th:text="${errorMsg}" style="color:red;"></p>
     </div>
 
-
-    
-
 </body>
 </html>
+
+<!-- ALTERNATIVE PATH VAR -->
+<!-- <a th:href="@{/details/{id}(id=${listing.id})}">Details</a> -->
+<!-- GET /details/12345abcd -->
+<!-- @GetMapping(path = "/details/{id}")
+    public String getListingDetails(@PathVariable("id") String listingId, Model model) {
+        // Use listingId to query the database for the specific listing
+        Document listingDetails = listingsService.getListingDetailsById(listingId);
+
+        // Add the listing details to the model
+        model.addAttribute("listing", listingDetails);
+
+        return "view3"; // Return the detailed view
+} -->

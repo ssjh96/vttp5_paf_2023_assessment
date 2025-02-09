@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <img th:src="${details.images.picture_url}" alt="picture unavailable." height="200" width="300">
+
+    <br><br>
+
+    <a th:href="@{/search(country=${listingSearch.country}, noOfPeople=${listingSearch.noOfPeople}, priceMin=${listingSearch.priceMin}, priceMax=${listingSearch.priceMax})}">Back</a>
+
+    <table border="1">
+        <tr>
+            <td>Id</td>
+            <td th:text="${details._id}"></td>
+        </tr>
+
+        <tr>
+            <td>Description</td>
+            <td th:text="${details.description}"></td>
+        </tr>
+
+        <tr>
+            <td>Address</td>
+            <td>
+                <span th:text="${details.address.street}"></span>
+                <br>
+                <span th:text="${details.address.suburb}"></span>
+                <br>
+                <span th:text="${details.address.country}"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Price</td>
+            <td th:text="${details.price}"></td>
+        </tr>
+
+        <tr>
+            <td>Amenities</td>
+            <td th:text="${details.amenities}"></td>
+            <!-- <td>
+                <ul>
+                    <li th:each="amenity: ${details.amenities}" th:text="${amenity}"></li>
+                </ul>
+            </td> -->
+        </tr>
+
+    </table>
+
+</body>
+</html>
