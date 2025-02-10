@@ -134,6 +134,7 @@ public class ListingsController {
 								BindingResult bindingResult, Model model,
 								HttpSession httpSession) 
 	{
+		// If posting form has errors
 		if(bindingResult.hasErrors())
 		{
 			// For view 3 back to view 2 (back button)
@@ -147,7 +148,28 @@ public class ListingsController {
 			return "view3"; // return view 3 with errors
 		}
 
-		return null;
+		// If no vacancy
+		if (!listingsService.checkVacancy(listingId, booking.getDuration()))
+		{
+			// For view 3 back to view 2 (back button)
+			ListingSearch listingSearch = (ListingSearch) httpSession.getAttribute("listingSearch");
+			model.addAttribute("listingSearch", listingSearch); // added for back button to backtrack
+
+			// repopulate with details doc
+			Document detailsDoc = (Document) httpSession.getAttribute("details");
+			model.addAttribute("details", detailsDoc);
+
+			// Add ErrorMsg
+			model.addAttribute("errorMsg", "No Vancancy...");
+
+			return "view3"; // return view 3 with errors
+		}
+
+		String resvId = listingsService.createReservation(listingId, booking);
+
+		model.addAttribute("resvId", resvId);
+
+		return "view4";
 	}
 	
 

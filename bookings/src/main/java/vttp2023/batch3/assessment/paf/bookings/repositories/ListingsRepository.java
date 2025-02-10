@@ -1,5 +1,6 @@
 package vttp2023.batch3.assessment.paf.bookings.repositories;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,11 +17,13 @@ import org.springframework.data.mongodb.core.aggregation.SortOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import com.mongodb.BasicDBObject;
 
 import vttp2023.batch3.assessment.paf.bookings.Utils.MongoParams;
+import vttp2023.batch3.assessment.paf.bookings.Utils.SqlQueries;
 
 
 @Repository
@@ -119,6 +122,28 @@ public class ListingsRepository
 	
 
 	//TODO: Task 5
+	public Integer checkVacancy(String listingId)
+	{
+		SqlRowSet rs = jdbcTemplate.queryForRowSet(SqlQueries.CHECK_VACANCY, listingId);
 
+		rs.next(); // move cursor down
+		System.out.println(">>>>> RS: " + rs);
+		Integer vacancy = rs.getInt("vacancy");
+		System.out.println(">>>>> Vacancy: " + vacancy);
+
+		return vacancy;
+	}
+	
+	public Integer insertReservation(String resvId, String name, String email, String accId, Date arrivalDate, Integer duration)
+	{
+		Integer rowsUpdated = jdbcTemplate.update(SqlQueries.INSERT_RESERVATIONS, resvId, name, email, accId, arrivalDate, duration);
+
+		return rowsUpdated;
+	}
+
+	public void updateResertvation(Integer newVacancy, String listingId)
+	{
+		jdbcTemplate.update(SqlQueries.UPDATE_VACANCY, newVacancy, listingId);
+	}
 
 }

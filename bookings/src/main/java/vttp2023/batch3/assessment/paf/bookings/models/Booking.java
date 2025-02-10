@@ -20,7 +20,7 @@ public class Booking
 
     @NotNull(message = "date cannot be null")
     @FutureOrPresent(message = "date cannot be in the past")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date arrivalDate;
 
     @NotNull(message = "duration cannot be blank")

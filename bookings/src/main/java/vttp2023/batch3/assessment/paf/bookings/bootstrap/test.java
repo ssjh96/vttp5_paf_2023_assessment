@@ -57,6 +57,11 @@ public class test implements CommandLineRunner
         // Test task 4
         Optional<Document> t4_optDoc = listingsRepository.findDetailsByListingId("13530122");
         System.out.println(">>> Test 4: Document gotten is: " + t4_optDoc.get());
+
+
+        // Test task 5
+        listingsRepository.checkVacancy("13530122");
+        System.out.println();
         
     }
     
