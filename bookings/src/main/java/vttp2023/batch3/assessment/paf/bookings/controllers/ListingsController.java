@@ -9,16 +9,22 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 
+import vttp2023.batch3.assessment.paf.bookings.models.Booking;
 import vttp2023.batch3.assessment.paf.bookings.models.ListingSearch;
 import vttp2023.batch3.assessment.paf.bookings.services.ListingsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Controller
@@ -112,12 +118,37 @@ public class ListingsController {
 		// Populate view 3 with the details
 		Document detailsDoc = detailsOptDoc.get();
 		model.addAttribute("details", detailsDoc);
+		httpSession.setAttribute("details", detailsDoc); // store in session
+
+		// Add empty booking for posting in task 5
+		model.addAttribute("booking", new Booking());
 
 		return "view3";
 	}
 	
 	
 	//TODO: Task 5
+	@PostMapping(path = "/book/{id}")
+	public String postBooking(@PathVariable ("id") String listingId, 
+								@Valid @ModelAttribute("booking") Booking booking, 
+								BindingResult bindingResult, Model model,
+								HttpSession httpSession) 
+	{
+		if(bindingResult.hasErrors())
+		{
+			// For view 3 back to view 2 (back button)
+			ListingSearch listingSearch = (ListingSearch) httpSession.getAttribute("listingSearch");
+			model.addAttribute("listingSearch", listingSearch); // added for back button to backtrack
 
+			// repopulate with details doc
+			Document detailsDoc = (Document) httpSession.getAttribute("details");
+			model.addAttribute("details", detailsDoc);
+
+			return "view3"; // return view 3 with errors
+		}
+
+		return null;
+	}
+	
 
 }

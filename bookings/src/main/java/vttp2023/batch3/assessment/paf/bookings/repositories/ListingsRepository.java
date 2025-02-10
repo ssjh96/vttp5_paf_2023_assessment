@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.aggregation.MatchOperation;
 import org.springframework.data.mongodb.core.aggregation.SortOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.mongodb.BasicDBObject;
@@ -28,6 +29,9 @@ public class ListingsRepository
 
 	@Autowired
 	private MongoTemplate template;
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	//TODO: Task 2
 	// db.listings.distinct('address.country')

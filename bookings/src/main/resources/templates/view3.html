@@ -54,29 +54,41 @@
 
     <br><br>
 
-    <form method="post" th:action="@{/book}">
+    <form method="post" th:action="@{/book/{id}(id=${details._id})}" th:object="${booking}">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="name" name="name">
+        <p class = "text-danger" style="color:red" data-th-if="${#fields.hasErrors('name')}" data-th-errors = "*{name}"></p>
 
         <br>
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email">
+        <p class = "text-danger" style="color:red" data-th-if="${#fields.hasErrors('email')}" data-th-errors = "*{email}"></p>
 
         <br>
         
         <label for="arrivalDate">Arrival:</label>
-        <input type="date" id="arrivalDate" name="arrivalDate" required>
+        <input type="date" id="arrivalDate" name="arrivalDate">
+        <p class = "text-danger" style="color:red" data-th-if="${#fields.hasErrors('arrivalDate')}" data-th-errors = "*{arrivalDate}"></p>
 
         <br>
 
         <label for="duration">Duration (days):</label>
-        <input type="number" id="duration" name="duration" required>
+        <input type="number" id="duration" name="duration">
+        <p class = "text-danger" style="color:red" data-th-if="${#fields.hasErrors('duration')}" data-th-errors = "*{duration}"></p>
 
         <br>
 
+        <!-- Pass listing ID as a hidden field -->
+        <input type="hidden" name="listingId" th:value="${details._id}">
+
         <button type="submit">Book</button>
     </form>
+
+    <!-- Display Error Msg if no more vacancy (Manual Validation) -->
+    <div th:if="${errorMsg}">
+        <p th:text="${errorMsg}" style="color:red;"></p>
+    </div>
 
 </body>
 </html>
